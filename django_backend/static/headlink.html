@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+</head>
+<body>
+  <p>Dear {{lead_name}},</p>
+  <p>For the upcoming workshop at {{workshop_name}}, {{district}}, {{state}} on {{start_date}} - {{end_date}}, {{responder_list}}
+    has provided unavailability to participate in workshop following is the reason mentioned:</p>
+
+
+    <table>
+        <thead>
+          <th>Responder</th>
+          <th>Reason</th>
+          <th>Category</th>
+        </thead>
+        <tbody>
+          {% for data in da%}
+      <tr>
+        <td>{{data.responder_list}}</td>
+        <td>{{data.reason}}</td>
+        <td>{{data.category}}</td>
+      </tr>
+      {%endfor%}
+        </tbody>
+      </table>
+<p>Please approve/reject the unavailability reason through this link/button: <a href="{{ url }}/api/main/headapproval/{{ uid }}/{{ wid }}" >Click Here</a></p>
+
+</body>
+</html>

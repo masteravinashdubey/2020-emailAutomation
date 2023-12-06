@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    </style>
+</head>
+<body>
+  <p>Dear Sir,</p>
+  <p>For the upcoming workshop at {{workshop_name}}, {{district}}, {{state}} on {{start_date}} - {{end_date}},
+    we have got the following responses for Willingness and Unavailability .</p>
+
+<table>
+  <thead>
+    <th>Responder</th>
+    <th>Willingness/Unavailability</th>
+    <th>Reason</th>
+    <th>Approved/Rejected</th>
+    <th>Approved/Rejected by</th>
+  </thead>
+  <tbody>
+    {% for data in stat%}
+    {% if data.willingness_or_unavailability != 'None'%}
+    <tr>
+      <td>
+        {{data.responder}}
+      </td>
+      <td>
+        {{data.willingness_or_unavailability}}
+      </td>
+      <td>
+        {{data.reason}}
+      </td>
+      <td>{{data.approval_status}}</td>
+      <td>{{data.approved_or_rejected_by}}</td>
+    </tr>
+    {%endif%}
+    {%endfor%}
+  </tbody>
+</table>
+<p>
+Please suggest a team for the workshop from the list below
+</p>
+    <table>
+      <thead>
+        <th>Responder</th>
+        <th>Count of workshops taken in past 1 year</th>
+        <th>Reason</th>
+      </thead>
+      <tbody>
+        {% for data in team%}
+    <tr>
+      <td>{{data.name}}</td>
+      <td>{{data.past_count}}</td>
+      {%if data.status == 'Willingness'%}
+      <td>Willingness</td>
+      {%elif data.status == 'None'%}
+      <td>total count {{data.total_count}}</td>
+      {%else %}
+      <td>{{data.status}} : total count {{data.total_count}}</td>
+      {%endif%}
+    </tr>
+    {%endfor%}
+      </tbody>
+    </table>
+    <p>Please use this link to approve the team : <a href="{{ url }}/api/main/kavisirmailapprove/{{ wid }}">link</a> </p>
+</body>
+</html>
